@@ -19,16 +19,16 @@
 
     <!-- Top Slider Track -->
     <path
-        android:fillColor="@color/slider_track_color"
+        android:fillColor="@color/alert_slider_notification_background"
         android:pathData="M3,7h18v2H3z" />
 
     <!-- Bottom Slider Track -->
     <path
-        android:fillColor="@color/slider_track_color"
+        android:fillColor="@color/alert_slider_notification_background"
         android:pathData="M3,15h18v2H3z" />
 
     <!-- Slider Thumb (Oval) -->
     <path
-        android:fillColor="@color/slider_thumb_color"
+        android:fillColor="@color/alert_slider_notification_background"
         android:pathData="M9.6,12a2.4,1.2 0 1,1 4.8,0a2.4,1.2 0 1,1 -4.8,0" />
 </vector>
