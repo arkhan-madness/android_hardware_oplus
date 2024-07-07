@@ -19,6 +19,7 @@ import com.android.settingslib.widget.MainSwitchPreference
 class DozeSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     CompoundButton.OnCheckedChangeListener {
     private lateinit var alwaysOnDisplayPreference: SwitchPreferenceCompat
+    private lateinit var dozeOnChargePreference: SwitchPreferenceCompat
     private lateinit var switchBar: MainSwitchPreference
 
     private var pickUpPreference: ListPreference? = null
@@ -49,6 +50,9 @@ class DozeSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreference
         alwaysOnDisplayPreference.isEnabled = dozeEnabled
         alwaysOnDisplayPreference.isChecked = Utils.isAlwaysOnEnabled(requireContext())
         alwaysOnDisplayPreference.onPreferenceChangeListener = this
+
+        dozeOnChargePreference = findPreference(Utils.DOZE_ON_CHARGE)!!
+        dozeOnChargePreference.isEnabled = alwaysOnDisplayPreference.isChecked
 
         val pickupSensorCategory =
             preferenceScreen.findPreference<PreferenceCategory>(Utils.CATEGORY_PICKUP_SENSOR)!!
@@ -82,6 +86,7 @@ class DozeSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreference
     override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
         if (preference.key == Utils.ALWAYS_ON_DISPLAY) {
             Utils.enableAlwaysOn(requireContext(), newValue as Boolean)
+            dozeOnChargePreference.isEnabled = newValue as Boolean
         }
         handler.post { Utils.checkDozeService(requireContext()) }
         return true
@@ -99,6 +104,7 @@ class DozeSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreference
         }
 
         alwaysOnDisplayPreference.isEnabled = isChecked
+        dozeOnChargePreference.isEnabled = isChecked && alwaysOnDisplayPreference.isChecked
         pickUpPreference?.isEnabled = isChecked
         pocketPreference?.isEnabled = isChecked
     }
